@@ -1,2 +1,2 @@
 # simpleFTP
-Yet another FTP implementation.
+Yet another FTP client implementation.
