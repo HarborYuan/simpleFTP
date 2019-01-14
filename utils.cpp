@@ -32,7 +32,7 @@ std::tuple<std::string, unsigned short> utils::getDataURL(const char *buf) {
 }
 
 bool utils::command(SOCKET Socket, std::string cmd, std::string &ret, int stateCode) {
-  int len = 100;
+  const int len = 100;
   send(Socket, cmd.c_str(), int(cmd.length()), 0);
   char buf[len + 1];
   int bufLen = recv(Socket, buf, len, 0);
@@ -47,7 +47,7 @@ bool utils::command(SOCKET Socket, std::string cmd, std::string &ret, int stateC
 }
 
 int utils::recvCode(SOCKET Socket) {
-  int len = 100;
+  const int len = 100;
   char buf[len + 1];
   int bufLen = recv(Socket, buf, len, 0);
   buf[bufLen] = '\0';
@@ -122,7 +122,7 @@ bool utils::uploadFile(SOCKET Socket, std::string dir, std::string localDir) {
     std::cout << "utils::uploadFile() : File can't be open! FileDir : " << localDir << std::endl;
     return false;
   }
-  int len = 2048;
+  const int len = 2048;
   char buf[len + 1];
   ifs.seekg(0, ifs.end);
   long long int length = ifs.tellg();

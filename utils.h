@@ -1,8 +1,6 @@
 #ifndef SIMPLEFTP_UTILS_H
 #define SIMPLEFTP_UTILS_H
 
-#endif //SIMPLEFTP_UTILS_H
-
 #include <sstream>
 #include <iostream>
 #include <fstream>
@@ -30,3 +28,5 @@ class utils {
   static bool downloadFile(SOCKET Socket, std::string dir, std::string localDir, int fileSize);
   static bool uploadFile(SOCKET Socket, std::string dir, std::string localDir);
 };
+
+#endif //SIMPLEFTP_UTILS_H

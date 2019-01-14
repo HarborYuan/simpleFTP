@@ -1,7 +1,6 @@
 #ifndef SIMPLEFTP_SOCKET_H
 #define SIMPLEFTP_SOCKET_H
 
-#endif //SIMPLEFTP_SOCKET_H
 #include "utils.h"
 #include <winsock2.h>
 #include <iostream>
@@ -23,3 +22,5 @@ class Socket {
   int sendFile(std::string dir,std::string localDir);
   int mkdir(std::string dir);
 };
+
+#endif //SIMPLEFTP_SOCKET_H
