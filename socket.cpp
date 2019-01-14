@@ -202,3 +202,15 @@ int Socket::sendFile(std::string dir, std::string localDir) {
   }
   return 0;
 }
+
+int Socket::mkdir(const std::string dir) {
+  std::ostringstream oss;
+  std::string ret;
+  oss << "MKD " << dir << "\r\n";
+  //257 means the dir created!
+  if (!utils::command(socketServer, oss.str(), ret, 257)) {
+    std::cout << ret;
+    return -1;
+  }
+  return 0;
+}
