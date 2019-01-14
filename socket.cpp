@@ -136,8 +136,8 @@ int Socket::list(const std::string dir) {
     return -1;
   }
   //226 means Data transfer complete
-  if (utils::recvCode(socketServer)!=226) {
-    std::cout<<"Socket::list() : No 226 Error!" << std::endl;
+  if (utils::recvCode(socketServer) != 226) {
+    std::cout << "Socket::list() : No 226 Error!" << std::endl;
     return -1;
   }
   closesocket(socketData);
@@ -145,25 +145,35 @@ int Socket::list(const std::string dir) {
   return 0;
 }
 
-int Socket::getFile(const std::string dir) {
+int Socket::getFile(const std::string dir, const std::string localDir) {
   if (this->setSocketData()) {
     std::cout << "Error when connecting to the data socket." << std::endl;
     return -1;
   }
   std::ostringstream oss;
-  oss << "RETR " << dir << "\r\n";
+  std::istringstream iss;
+  oss << "SIZE " << dir << "\r\n";
   std::string ret;
-  //150 means File status is OK!
+  //213 means File status is OK!
+  if (!utils::command(socketServer, oss.str(), ret, 213)) {
+    return -1;
+  }
+  iss.str(ret);
+  int fileSize;
+  iss >> fileSize;
+  iss >> fileSize;
+  oss.str("");
+  oss << "RETR " << dir << "\r\n";
+  //125 means File can be downloaded!
   if (!utils::command(socketServer, oss.str(), ret, 125)) {
     return -1;
   }
-  if (!utils::getStringData(socketData, ret)) {
+  if (!utils::downloadFile(socketData, dir, localDir, fileSize)) {
     return -1;
   }
-  std::cout << ret << std::endl;
   //226 means Data transfer complete
-  if (utils::recvCode(socketServer)!=226) {
-    std::cout<<"Socket::getFile() : No 226 Error!" << std::endl;
+  if (utils::recvCode(socketServer) != 226) {
+    std::cout << "Socket::getFile() : No 226 Error!" << std::endl;
     return -1;
   }
   closesocket(socketData);

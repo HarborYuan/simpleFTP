@@ -9,8 +9,8 @@ int main() {
   }
   ftp.login("anonymous", "123345678@qq.com");
   ftp.list("/");
-  ftp.getFile("/file2.txt");
-  ftp.getFile("/dir1/file1.1.txt");
+  ftp.getFile("/readme.pdf","readme.pdf");
+  ftp.getFile("/dir1/readme.pdf","readme1.pdf");
   ftp.~Socket();
   return 0;
 }

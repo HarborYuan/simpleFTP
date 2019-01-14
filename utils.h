@@ -5,6 +5,7 @@
 
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <tuple>
 #include <regex>
@@ -26,4 +27,5 @@ class utils {
   static int recvCode(SOCKET Socket);
   static bool getStringData(SOCKET Socket, std::string &ret);
   static bool listParser(const std::string &listString, std::vector<struct fileAttr> &fileList);
+  static bool downloadFile(SOCKET Socket, std::string dir, std::string localDir, int fileSize);
 };

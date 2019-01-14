@@ -93,3 +93,24 @@ bool utils::listParser(const std::string &listString, std::vector<struct fileAtt
   return true;
 }
 
+bool utils::downloadFile(SOCKET Socket, const std::string dir, const std::string localDir, int fileSize) {
+  std::ofstream ofs(localDir, std::ios::out | std::ios::binary);
+  if (!ofs.is_open()) {
+    std::cout << "utils::downloadFile() : File can't be open! FileDir : " << localDir << std::endl;
+    return false;
+  }
+  int sizeNow = 0;
+  int len = 2048;
+  char buf[len + 1];
+  int recvBytes;
+  while ((recvBytes = recv(Socket, buf, len, 0)) > 0) {
+    buf[recvBytes] = '\0';
+    sizeNow += recvBytes;
+    ofs.write(buf, recvBytes);
+  }
+  if (sizeNow != fileSize) {
+    std::cout << "utils::downloadFile() : File is incomplete!" << std::endl;
+    return false;
+  }
+  return true;
+}

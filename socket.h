@@ -19,5 +19,5 @@ class Socket {
   int login(std::string username, std::string password);
   int setSocketData();
   int list(std::string dir);
-  int getFile(std::string dir);
+  int getFile(std::string dir,std::string localDir);
 };
