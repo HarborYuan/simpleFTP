@@ -146,7 +146,7 @@ int Socket::list(const std::string dir) {
 }
 
 int Socket::getFile(const std::string dir, const std::string localDir) {
-  if (this->setSocketData()) {
+  if (setSocketData()) {
     std::cout << "Error when connecting to the data socket." << std::endl;
     return -1;
   }
@@ -177,5 +177,28 @@ int Socket::getFile(const std::string dir, const std::string localDir) {
     return -1;
   }
   closesocket(socketData);
+  return 0;
+}
+
+int Socket::sendFile(std::string dir, std::string localDir) {
+  if (setSocketData()) {
+    std::cout << "Error when connecting to the data socket." << std::endl;
+    return -1;
+  }
+  std::ostringstream oss;
+  std::string ret;
+  oss << "STOR " << dir << "\r\n";
+  //125 means File can be uploaded!
+  if (!utils::command(socketServer, oss.str(), ret, 125)) {
+    return -1;
+  }
+  if (!utils::uploadFile(socketData, dir, localDir)) {
+    return -1;
+  }
+  closesocket(socketData);
+  if (utils::recvCode(socketServer) != 226) {
+    std::cout << "Socket::getFile() : No 226 Error!" << std::endl;
+    return -1;
+  }
   return 0;
 }

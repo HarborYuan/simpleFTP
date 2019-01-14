@@ -20,4 +20,5 @@ class Socket {
   int setSocketData();
   int list(std::string dir);
   int getFile(std::string dir,std::string localDir);
+  int sendFile(std::string dir,std::string localDir);
 };

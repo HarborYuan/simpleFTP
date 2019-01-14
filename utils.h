@@ -28,4 +28,5 @@ class utils {
   static bool getStringData(SOCKET Socket, std::string &ret);
   static bool listParser(const std::string &listString, std::vector<struct fileAttr> &fileList);
   static bool downloadFile(SOCKET Socket, std::string dir, std::string localDir, int fileSize);
+  static bool uploadFile(SOCKET Socket, std::string dir, std::string localDir);
 };

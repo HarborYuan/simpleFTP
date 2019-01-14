@@ -112,5 +112,31 @@ bool utils::downloadFile(SOCKET Socket, const std::string dir, const std::string
     std::cout << "utils::downloadFile() : File is incomplete!" << std::endl;
     return false;
   }
+  ofs.close();
+  return true;
+}
+
+bool utils::uploadFile(SOCKET Socket, std::string dir, std::string localDir) {
+  std::ifstream ifs(localDir, std::ios::in | std::ios::binary);
+  if (!ifs.is_open()) {
+    std::cout << "utils::uploadFile() : File can't be open! FileDir : " << localDir << std::endl;
+    return false;
+  }
+  int len = 2048;
+  char buf[len + 1];
+  ifs.seekg(0, ifs.end);
+  long long int length = ifs.tellg();
+  ifs.seekg(0, ifs.beg);
+  while (!ifs.eof()) {
+    ifs.read(buf, len);
+    length -= len;
+    if (length >= 0) {
+      send(Socket, buf, len, 0);
+    } else {
+      send(Socket, buf, len + length, 0);
+      break;
+    }
+  }
+  ifs.close();
   return true;
 }
