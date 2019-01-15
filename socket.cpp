@@ -22,7 +22,7 @@ Socket::Socket(const std::string hostName, const u_short port) {
   serverAddr.sin_addr.s_addr = inet_addr(hostName.c_str());
   serverAddr.sin_port = htons(port);
 
-  int retValue = connect(socketServer, (LPSOCKADDR) &serverAddr, sizeof(serverAddr));
+  int retValue = connect(socketServer, (LPSOCKADDR) & serverAddr, sizeof(serverAddr));
   //check the TCP connection
   if (retValue == SOCKET_ERROR) {
     std::cout << "Socket::Socket() : can't connect to the server!" << std::endl;
@@ -109,7 +109,7 @@ int Socket::setSocketData() {
   serverAddr.sin_family = AF_INET;
   serverAddr.sin_addr.s_addr = inet_addr(hostName.c_str());
   serverAddr.sin_port = htons(port);
-  int retValue = connect(socketData, (LPSOCKADDR) &serverAddr, sizeof(serverAddr));
+  int retValue = connect(socketData, (LPSOCKADDR) & serverAddr, sizeof(serverAddr));
   if (retValue == SOCKET_ERROR) {
     std::cout << "Socket::setSocketData() : can't connect to the Data Socket!" << std::endl;
     closesocket(socketData);
