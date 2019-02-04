@@ -55,7 +55,7 @@ int utils::recvCode(SOCKET Socket) {
 }
 
 bool utils::getStringData(SOCKET Socket, std::string &ret) {
-  int len = 256;
+  const int len = 256;
   char buf[len + 1];
   int recvBytes;
   ret = std::string("");
@@ -100,7 +100,7 @@ bool utils::downloadFile(SOCKET Socket, const std::string dir, const std::string
     return false;
   }
   int sizeNow = 0;
-  int len = 2048;
+  const int len = 2048;
   char buf[len + 1];
   int recvBytes;
   while ((recvBytes = recv(Socket, buf, len, 0)) > 0) {
